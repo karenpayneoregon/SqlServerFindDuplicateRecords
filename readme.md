@@ -1,1 +1,1 @@
-This code is for a Microsoft TechNet article.
+This code is for a Microsoft TechNet article https://social.technet.microsoft.com/wiki/contents/articles/51628.sql-server-c-find-duplicate-record-with-identity.aspx
