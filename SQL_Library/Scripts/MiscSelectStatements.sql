@@ -47,6 +47,24 @@ SELECT  Cust.CompanyName ,
                             Cust.PostalCode ORDER BY CompanyName ) AS Rnum
 FROM    dbo.Customers AS Cust;
 
+
+/*
+	This statement was taken from 
+	https://social.technet.microsoft.com/wiki/contents/articles/50921.t-sql-remove-duplicate-rows-from-a-table-using-query-without-common-table-expression.aspx
+
+	and presented to the "Alternate" section of the article.
+*/
+SELECT  *
+FROM    dbo.Customer
+WHERE   CustomerIdentifier NOT IN ( SELECT  MIN(CustomerIdentifier)
+                                    FROM    dbo.Customer
+                                    GROUP BY CompanyName ,
+                                            ContactName ,
+                                            ContactTitle ,
+                                            Address ,
+                                            City ,
+                                            PostalCode );
+
 /*
 	SELECT statement to get table names from the current catalog
 */

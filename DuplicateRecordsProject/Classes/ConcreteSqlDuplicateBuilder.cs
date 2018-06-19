@@ -46,7 +46,7 @@ namespace DuplicateRecordsProject.Classes
                 if (_orderBy != "None")
                 {
                     _item.Add($" ORDER BY {_orderBy}");
-                }               
+                }
             }
         }
 
