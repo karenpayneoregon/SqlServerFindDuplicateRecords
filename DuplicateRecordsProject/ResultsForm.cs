@@ -13,11 +13,14 @@ namespace DuplicateRecordsProject
         {
             InitializeComponent();
         }
+
         private readonly BindingSource _bs = new BindingSource();
         private readonly DataTable _dataTable;
         private readonly string _tableName;
         private readonly string _identityColumnName;
+
         private string _deleteStatement;
+
         /// <summary>
         /// When this form closes this is your DELETE statement.
         /// </summary>
@@ -68,8 +71,18 @@ namespace DuplicateRecordsProject
                 // Determine if there are one or more rows to create the DELETE statement
                 if (identityList.Count >0)
                 {
-                    var deleteStatement = $"DELETE FROM {_tableName} WHERE {_identityColumnName} IN ({string.Join(",", identityList.ToArray().ToArray())})";
+                    /*
+                     * No formal parameters needed e.g. cmd.Parameters.Add . . .
+                     */
+                    var deleteStatement = $"DELETE FROM {_tableName} " + 
+                                          $"WHERE {_identityColumnName} IN " + 
+                                          $"({string.Join(",", identityList.ToArray().ToArray())})";
+
                     _deleteStatement = deleteStatement;
+
+                    /*
+                     * For learning
+                     */
                     if (Environment.UserName == "Karens")
                     {
                         Console.WriteLine(deleteStatement);
@@ -82,7 +95,7 @@ namespace DuplicateRecordsProject
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Selection or rows failed{Environment.NewLine}{e.Message}");
+                MessageBox.Show($"Selection or rows failed\n{e.Message}");
             }
         }
     }

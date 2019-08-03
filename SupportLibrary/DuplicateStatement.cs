@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace DuplicateRecordsProject.Classes
+namespace SupportLibrary
 {
     public class DuplicateStatement
     {

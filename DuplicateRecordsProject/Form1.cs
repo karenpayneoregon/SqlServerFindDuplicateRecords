@@ -7,9 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DuplicateRecordsProject.Classes;
+using DuplicateRecordsProject;
 using DuplicateRecordsProject.Extensions;
 using SQL_Library;
+using SupportLibrary;
 using UtilityLibrary;
 
 namespace DuplicateRecordsProject
@@ -22,7 +23,7 @@ namespace DuplicateRecordsProject
             Shown += Form1_Shown;
         }
 
-        private List<string> countryColumnList;
+        private List<string> _countryColumnList;
         /// <summary>
         /// Get databases for server
         /// </summary>
@@ -40,9 +41,9 @@ namespace DuplicateRecordsProject
                 lstDatabaseNames.SelectedIndex = lstDatabaseNames.FindString("NorthWindDemo");
                 lstTableNames.SelectedIndex = lstTableNames.FindString("Customer");
                 var tOps = new SqlTables("NorthWindDemo");
-                countryColumnList = tOps.CountrySelected;
-                //
-                foreach (var item in countryColumnList)
+                _countryColumnList = tOps.CountrySelected;
+                
+                foreach (var item in _countryColumnList)
                 {
                     clbColumns.FindItemAndSetChecked(item);
                 }
@@ -77,6 +78,7 @@ namespace DuplicateRecordsProject
 
             cboOrderBy.Items.Clear();
             cboOrderBy.Items.Add("None");
+
             foreach (var column in results)
             {
                 clbColumns.Items.Add(column);
@@ -111,8 +113,8 @@ namespace DuplicateRecordsProject
             {
                 if (identityColumn != null)
                 {
-                    var test = sqlColumns.Contains(identityColumn);
-                    if (test)
+                    var evaluateContains = sqlColumns.Contains(identityColumn);
+                    if (evaluateContains)
                     {
                         sqlColumns.Remove(identityColumn);
                     }
@@ -145,8 +147,7 @@ namespace DuplicateRecordsProject
             {
                 var f = new ResultsForm(lstTableNames.Text, dt, identityColumn.ColumnName);
                 try
-                {
-                
+                {                
                     f.ShowDialog();
                 }
                 finally

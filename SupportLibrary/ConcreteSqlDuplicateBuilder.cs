@@ -2,14 +2,14 @@
 using System.Linq;
 using UtilityLibrary;
 
-namespace DuplicateRecordsProject.Classes
+namespace SupportLibrary
 {
     public class ConcreteSqlDuplicateBuilder : SqlDuplicateBuilder
     {
         private readonly DuplicateStatement _item = new DuplicateStatement();
         private readonly List<SqlColumn> _sqlColumnList;
-        private string _tableName;
-        private string _orderBy;
+        private readonly string _tableName;
+        private readonly string _orderBy;
 
         public ConcreteSqlDuplicateBuilder(DuplicateItemContainer pColumnsInformation)
         {
@@ -18,23 +18,23 @@ namespace DuplicateRecordsProject.Classes
             _orderBy = pColumnsInformation.OrderBy;
         }
 
-        public override void CreateA()
+        public override void CreateInnerJoin()
         {
             _item.Add($"SELECT A.* FROM {_tableName} A INNER JOIN (SELECT ");
         }
-        public override void CreateSelectPart()
+        public override void CreateSelectStatement()
         {
             _item.Add(string.Join(",", _sqlColumnList.Select(col => col.ColumnName).ToArray()) + $" FROM {_tableName} ");
         }
-        public override void CreateGroupPart()
+        public override void CreateGroup()
         {
             _item.Add("GROUP BY " + string.Join(",", _sqlColumnList.Select(col => col.ColumnName).ToArray()) + " ");
         }
-        public override void CreateHavingPart()
+        public override void CreateHaving()
         {
             _item.Add("HAVING COUNT(*) > 1");
         }
-        public override void CreateB()
+        public override void CreateInnerSelect()
         {
             var joined = _sqlColumnList.Select(item => $"A.{item.ColumnName} = B.{item.ColumnName}").ToArray().JoinCondition();
             _item.Add(") B ON " + joined);

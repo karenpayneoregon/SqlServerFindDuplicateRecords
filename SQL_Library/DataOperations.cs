@@ -29,6 +29,7 @@ namespace SQL_Library
                     try
                     {
                         cn.Open();
+
                         dt.Load(cmd.ExecuteReader());
                     }
                     catch (Exception e)

@@ -60,13 +60,20 @@ namespace SQL_Library
                         var reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
-                            columnList.Add(new SqlColumn() {Schema = Catalog, TableName = TableName, ColumnName = reader.GetString(0), IsIdentity = false});
+                            columnList.Add(new SqlColumn()
+                            {
+                                Schema = Catalog,
+                                TableName = TableName,
+                                ColumnName = reader.GetString(0),
+                                IsIdentity = false
+                            });
                         }
 
                         reader.Close();
 
                         cmd.CommandText = selectIdentityStatement;
                         var keyName = Convert.ToString(cmd.ExecuteScalar());
+
                         if (!string.IsNullOrWhiteSpace(keyName))
                         {
                             var column = columnList.FirstOrDefault(col => col.ColumnName == keyName);

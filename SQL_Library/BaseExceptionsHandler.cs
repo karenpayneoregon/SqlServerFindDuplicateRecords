@@ -59,30 +59,5 @@ namespace SQL_Library
         /// <returns></returns>
         public bool IsSuccessFul => !HasException;
 
-        /// <summary>
-        /// Returns an array of the entire exception list in reverse order
-        /// (innermost to outermost exception)
-        /// </summary>
-        /// <param name="ex">The original exception to work off</param>
-        /// <returns>Array of Exceptions from innermost to outermost</returns>
-        public Exception[] InnerExceptions(Exception ex)
-        {
-            List<Exception> exceptions = new List<Exception>();
-            exceptions.Add(ex);
-
-            Exception currentEx = ex;
-            while (currentEx.InnerException != null)
-            {
-                exceptions.Add(currentEx);
-            }
-
-            // Reverse the order to the innermost is first
-            exceptions.Reverse();
-
-            return exceptions.ToArray();
-
-        }
-
-
     }
 }

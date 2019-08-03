@@ -1,4 +1,4 @@
-﻿namespace DuplicateRecordsProject.Classes
+﻿namespace SupportLibrary
 {
     /// <summary>
     /// This class defines methods for constructing a sql statement
@@ -6,11 +6,11 @@
     /// </summary>
     public abstract class SqlDuplicateBuilder
     {
-        public abstract void CreateA();
-        public abstract void CreateSelectPart();
-        public abstract void CreateGroupPart();
-        public abstract void CreateHavingPart();
-        public abstract void CreateB();
+        public abstract void CreateInnerJoin();
+        public abstract void CreateSelectStatement();
+        public abstract void CreateGroup();
+        public abstract void CreateHaving();
+        public abstract void CreateInnerSelect();
         public abstract void OrderBy();
         public abstract DuplicateStatement GetResult();
     }

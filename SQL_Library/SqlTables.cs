@@ -35,7 +35,8 @@ namespace SQL_Library
             var nameList = new List<string>();
 
             var selectStatement = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES " + 
-                                  "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME != 'sysdiagrams' AND TABLE_NAME NOT IN ('TableNames','TableColumnInformation') " + 
+                                  "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME != 'sysdiagrams' " + 
+                                    "AND TABLE_NAME NOT IN ('TableNames','TableColumnInformation') " + 
                                   "ORDER BY TABLE_NAME";
 
             using (var cn = new SqlConnection() { ConnectionString = ConnectionString })

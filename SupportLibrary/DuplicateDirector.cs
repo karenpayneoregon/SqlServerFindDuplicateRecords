@@ -1,6 +1,6 @@
 ﻿using UtilityLibrary;
 
-namespace DuplicateRecordsProject.Classes
+namespace SupportLibrary
 {
     /// <summary>
     /// Top level for creating a duplicate statement
@@ -12,10 +12,12 @@ namespace DuplicateRecordsProject.Classes
         {
 
             var director = new DuplicateDirector();
-            SqlDuplicateBuilder builder = new ConcreteSqlDuplicateBuilder(container);
+            var builder = new ConcreteSqlDuplicateBuilder(container);
+
             director.Construct(builder);
 
             DuplicateStatement duplicateStatement = builder.GetResult();
+
             duplicateStatement.FinishedStatement();
             Statement =  duplicateStatement.Statement;
         }
@@ -27,11 +29,11 @@ namespace DuplicateRecordsProject.Classes
     {
         public void Construct(SqlDuplicateBuilder builder)
         {
-            builder.CreateA();
-            builder.CreateSelectPart();
-            builder.CreateGroupPart();
-            builder.CreateHavingPart();
-            builder.CreateB();
+            builder.CreateInnerJoin();
+            builder.CreateSelectStatement();
+            builder.CreateGroup();
+            builder.CreateHaving();
+            builder.CreateInnerSelect();
             builder.OrderBy();
         }
     }
