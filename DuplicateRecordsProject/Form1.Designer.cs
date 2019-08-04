@@ -29,27 +29,27 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.lstDatabaseNames = new System.Windows.Forms.ListBox();
+            this.DatabaseNameListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmdCheckForDuplicates = new System.Windows.Forms.Button();
-            this.lstTableNames = new System.Windows.Forms.ListBox();
+            this.DatabaseTableNamesListBox = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.clbColumns = new System.Windows.Forms.CheckedListBox();
-            this.cboOrderBy = new System.Windows.Forms.ComboBox();
+            this.SelectedTableColumnCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.OrderByComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lstDatabaseNames
+            // DatabaseNameListBox
             // 
-            this.lstDatabaseNames.FormattingEnabled = true;
-            this.lstDatabaseNames.Location = new System.Drawing.Point(12, 38);
-            this.lstDatabaseNames.Name = "lstDatabaseNames";
-            this.lstDatabaseNames.Size = new System.Drawing.Size(218, 316);
-            this.lstDatabaseNames.TabIndex = 1;
-            this.lstDatabaseNames.SelectedIndexChanged += new System.EventHandler(this.lstDatabaseNames_SelectedIndexChanged);
+            this.DatabaseNameListBox.FormattingEnabled = true;
+            this.DatabaseNameListBox.Location = new System.Drawing.Point(12, 38);
+            this.DatabaseNameListBox.Name = "DatabaseNameListBox";
+            this.DatabaseNameListBox.Size = new System.Drawing.Size(218, 316);
+            this.DatabaseNameListBox.TabIndex = 1;
+            this.DatabaseNameListBox.SelectedIndexChanged += new System.EventHandler(this.lstDatabaseNames_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -70,14 +70,14 @@
             this.cmdCheckForDuplicates.UseVisualStyleBackColor = true;
             this.cmdCheckForDuplicates.Click += new System.EventHandler(this.cmdCheckForDuplicates_Click);
             // 
-            // lstTableNames
+            // DatabaseTableNamesListBox
             // 
-            this.lstTableNames.FormattingEnabled = true;
-            this.lstTableNames.Location = new System.Drawing.Point(247, 38);
-            this.lstTableNames.Name = "lstTableNames";
-            this.lstTableNames.Size = new System.Drawing.Size(177, 316);
-            this.lstTableNames.TabIndex = 3;
-            this.lstTableNames.SelectedIndexChanged += new System.EventHandler(this.lstTableNames_SelectedIndexChanged);
+            this.DatabaseTableNamesListBox.FormattingEnabled = true;
+            this.DatabaseTableNamesListBox.Location = new System.Drawing.Point(247, 38);
+            this.DatabaseTableNamesListBox.Name = "DatabaseTableNamesListBox";
+            this.DatabaseTableNamesListBox.Size = new System.Drawing.Size(177, 316);
+            this.DatabaseTableNamesListBox.TabIndex = 3;
+            this.DatabaseTableNamesListBox.SelectedIndexChanged += new System.EventHandler(this.lstTableNames_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -97,22 +97,22 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Tables for selected database";
             // 
-            // clbColumns
+            // SelectedTableColumnCheckedListBox
             // 
-            this.clbColumns.FormattingEnabled = true;
-            this.clbColumns.Location = new System.Drawing.Point(441, 38);
-            this.clbColumns.Name = "clbColumns";
-            this.clbColumns.Size = new System.Drawing.Size(194, 319);
-            this.clbColumns.TabIndex = 6;
+            this.SelectedTableColumnCheckedListBox.FormattingEnabled = true;
+            this.SelectedTableColumnCheckedListBox.Location = new System.Drawing.Point(441, 38);
+            this.SelectedTableColumnCheckedListBox.Name = "SelectedTableColumnCheckedListBox";
+            this.SelectedTableColumnCheckedListBox.Size = new System.Drawing.Size(194, 319);
+            this.SelectedTableColumnCheckedListBox.TabIndex = 6;
             // 
-            // cboOrderBy
+            // OrderByComboBox
             // 
-            this.cboOrderBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboOrderBy.FormattingEnabled = true;
-            this.cboOrderBy.Location = new System.Drawing.Point(441, 363);
-            this.cboOrderBy.Name = "cboOrderBy";
-            this.cboOrderBy.Size = new System.Drawing.Size(194, 21);
-            this.cboOrderBy.TabIndex = 7;
+            this.OrderByComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.OrderByComboBox.FormattingEnabled = true;
+            this.OrderByComboBox.Location = new System.Drawing.Point(441, 363);
+            this.OrderByComboBox.Name = "OrderByComboBox";
+            this.OrderByComboBox.Size = new System.Drawing.Size(194, 21);
+            this.OrderByComboBox.TabIndex = 7;
             // 
             // label3
             // 
@@ -139,13 +139,13 @@
             this.ClientSize = new System.Drawing.Size(646, 450);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.cboOrderBy);
-            this.Controls.Add(this.clbColumns);
+            this.Controls.Add(this.OrderByComboBox);
+            this.Controls.Add(this.SelectedTableColumnCheckedListBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lstTableNames);
+            this.Controls.Add(this.DatabaseTableNamesListBox);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.lstDatabaseNames);
+            this.Controls.Add(this.DatabaseNameListBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -158,14 +158,14 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lstDatabaseNames;
+        private System.Windows.Forms.ListBox DatabaseNameListBox;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListBox lstTableNames;
+        private System.Windows.Forms.ListBox DatabaseTableNamesListBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckedListBox clbColumns;
+        private System.Windows.Forms.CheckedListBox SelectedTableColumnCheckedListBox;
         private System.Windows.Forms.Button cmdCheckForDuplicates;
-        private System.Windows.Forms.ComboBox cboOrderBy;
+        private System.Windows.Forms.ComboBox OrderByComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
     }

@@ -31,21 +31,21 @@ namespace DuplicateRecordsProject
         /// <param name="e"></param>
         private void Form1_Shown(object sender, EventArgs e)
         {
-            
 
             var ops = new SqlDatabases();
-            lstDatabaseNames.DataSource = ops.DatabaseNames();
+
+            DatabaseNameListBox.DataSource = ops.DatabaseNames();
 
             if (ops.IsKarenMachine)
             {
-                lstDatabaseNames.SelectedIndex = lstDatabaseNames.FindString("NorthWindDemo");
-                lstTableNames.SelectedIndex = lstTableNames.FindString("Customer");
-                var tOps = new SqlTables("NorthWindDemo");
-                _countryColumnList = tOps.CountrySelected;
+                DatabaseNameListBox.SelectedIndex = DatabaseNameListBox.FindString("NorthWindDemo");
+                DatabaseTableNamesListBox.SelectedIndex = DatabaseTableNamesListBox.FindString("Customer");
+                var databaseTables = new SqlTables("NorthWindDemo");
+                _countryColumnList = databaseTables.CountrySelected;
                 
                 foreach (var item in _countryColumnList)
                 {
-                    clbColumns.FindItemAndSetChecked(item);
+                    SelectedTableColumnCheckedListBox.FindItemAndSetChecked(item);
                 }
             }
 
@@ -57,9 +57,9 @@ namespace DuplicateRecordsProject
         /// <param name="e"></param>
         private void lstDatabaseNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var ops = new SqlTables(lstDatabaseNames.Text);
-            lstTableNames.DataSource = null;
-            lstTableNames.DataSource = ops.TableNames();
+            var databaseTables = new SqlTables(DatabaseNameListBox.Text);
+            DatabaseTableNamesListBox.DataSource = null;
+            DatabaseTableNamesListBox.DataSource = databaseTables.TableNames();
         }
         /// <summary>
         /// Get all columns for selected table.
@@ -69,24 +69,25 @@ namespace DuplicateRecordsProject
         /// <param name="e"></param>
         private void lstTableNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var ops = new SqlColumns(lstDatabaseNames.Text,lstTableNames.Text);
-            var results = ops.GetColumns();
+            var columnsForSelectedTable = new SqlColumns(DatabaseNameListBox.Text,DatabaseTableNamesListBox.Text);
+            var results = columnsForSelectedTable.GetColumns();
 
-            clbColumns.Items.Clear();
+            SelectedTableColumnCheckedListBox.Items.Clear();
 
             if (results.Count <= 0) return;
 
-            cboOrderBy.Items.Clear();
-            cboOrderBy.Items.Add("None");
+            OrderByComboBox.Items.Clear();
+            OrderByComboBox.Items.Add("None");
 
             foreach (var column in results)
             {
-                clbColumns.Items.Add(column);
+                SelectedTableColumnCheckedListBox.Items.Add(column);
                 if (column.IsIdentity) continue;
-                cboOrderBy.Items.Add(column.ColumnName);
+                OrderByComboBox.Items.Add(column.ColumnName);
             }
 
-            cboOrderBy.SelectedIndex = 0;
+            OrderByComboBox.SelectedIndex = 0;
+
         }
         /// <summary>
         /// Get columns to perform duplicate check
@@ -97,17 +98,19 @@ namespace DuplicateRecordsProject
         /// As coded columns should not be binary or similar type
         /// such as image, if so this will fail. Check types if unsure
         /// 
-        /// SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'SomeTable'
+        /// SELECT COLUMN_NAME, DATA_TYPE
+        ///     FROM INFORMATION_SCHEMA.COLUMNS
+        ///     WHERE TABLE_NAME = 'SomeTable'
         /// 
         /// </remarks>
         private void cmdCheckForDuplicates_Click(object sender, EventArgs e)
         {
-            if (clbColumns.Items.Count == 0) return;
+            if (SelectedTableColumnCheckedListBox.Items.Count == 0) return;
 
-            var allColumns = clbColumns.Items.OfType<SqlColumn>();
-            var identityColumn = allColumns.FirstOrDefault(col => col.IsIdentity);
+            var columns = SelectedTableColumnCheckedListBox.Items.OfType<SqlColumn>();
+            var identityColumn = columns.FirstOrDefault(sqlColumn => sqlColumn.IsIdentity);
 
-            var sqlColumns = clbColumns.CheckedIColumnDetailsList();
+            var sqlColumns = SelectedTableColumnCheckedListBox.CheckedIColumnDetailsList();
 
             if (sqlColumns.Count >0)
             {
@@ -124,28 +127,35 @@ namespace DuplicateRecordsProject
             var container = new DuplicateItemContainer()
             {
                 Columns = sqlColumns,
-                OrderBy = cboOrderBy.SelectedIndex == 0 ? "" : cboOrderBy.Text
+                OrderBy = OrderByComboBox.SelectedIndex == 0 ? "" : OrderByComboBox.Text
             };
 
             var manager = new DuplicateManager(container);
 
             // ReSharper disable once PossibleMultipleEnumeration
-            var ops = new DataOperations(allColumns.First().Schema);
-            var dt = ops.Duplicates(manager.Statement);
+            var ops = new DataOperations(columns.First().Schema);
+            var duplicatesDataTable = ops.Duplicates(manager.Statement);
+
             if (!ops.IsSuccessFul)
             {
                 MessageBox.Show("Failure");
                 return;
             }
 
-            if (dt.Rows.Count == 0)
+            if (duplicatesDataTable.Rows.Count == 0)
             {
                 MessageBox.Show("There are no duplicates in the selected table");
                 return;
             }
+
             if (identityColumn != null)
             {
-                var f = new ResultsForm(lstTableNames.Text, dt, identityColumn.ColumnName);
+
+                var f = new ResultsForm(
+                    DatabaseTableNamesListBox.Text, 
+                    duplicatesDataTable, 
+                    identityColumn.ColumnName);
+
                 try
                 {                
                     f.ShowDialog();
