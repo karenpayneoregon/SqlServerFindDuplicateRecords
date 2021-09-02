@@ -12,19 +12,14 @@ namespace DuplicateRecordsProject.Extensions
         /// <param name="column"></param>
         /// <returns>DataRow</returns>
         /// <remarks>Throws an exception if the DataSource is not a DataTable</remarks>
-        public static string CurrentRow(this BindingSource sender, string column)
-        {
-            return ((DataRowView)sender.Current).Row[column].ToString();
-        }
+        public static string CurrentRow(this BindingSource sender, string column) => ((DataRowView)sender.Current).Row[column].ToString();
+
         /// <summary>
         /// Return DataSource as a DataTable
         /// </summary>
         /// <param name="sender"></param>
         /// <returns></returns>
         /// <remarks>Throws an exception if the DataSource is not a DataTable</remarks>
-        public static DataTable DataTable(this BindingSource sender)
-        {
-            return (DataTable)sender.DataSource;
-        }
+        public static DataTable DataTable(this BindingSource sender) => (DataTable)sender.DataSource;
     }
 }

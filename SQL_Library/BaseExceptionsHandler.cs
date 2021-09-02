@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace SQL_Library
 {
+    /// <summary>
+    /// Provides access to exceptions at runtime
+    /// </summary>
     public class BaseExceptionProperties
     {
         protected bool mHasException;
@@ -19,13 +21,8 @@ namespace SQL_Library
         /// Provides access to the last exception thrown
         /// </summary>
         /// <returns></returns>
-        public Exception LastException
-        {
-            get
-            {
-                return mLastException;
-            }
-        }
+        public Exception LastException => mLastException;
+
         public SqlException SqlException => (SqlException)mLastException;
 
         /// <summary>

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SQL_Library
 {
+    /// <summary>
+    /// with .NET 5 this would be in appsettings.json
+    /// </summary>
     public class BaseSqlServerConnections : BaseExceptionProperties
     {
         /// <summary>

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SqlStatementsLibrary;
 
 namespace SQL_Library
 {
@@ -34,16 +35,16 @@ namespace SQL_Library
 
             var nameList = new List<string>();
 
-            var selectStatement = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES " + 
-                                  "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME != 'sysdiagrams' " + 
-                                    "AND TABLE_NAME NOT IN ('TableNames','TableColumnInformation') " + 
-                                  "ORDER BY TABLE_NAME";
+            //var selectStatement = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES " + 
+            //                      "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME != 'sysdiagrams' " + 
+            //                        "AND TABLE_NAME NOT IN ('TableNames','TableColumnInformation') " + 
+            //                      "ORDER BY TABLE_NAME";
 
             using (var cn = new SqlConnection() { ConnectionString = ConnectionString })
             {
                 using (var cmd = new SqlCommand() { Connection = cn })
                 {
-                    cmd.CommandText = selectStatement;
+                    cmd.CommandText = Queries.TableNamesStatement;
                     try
                     {
                         cn.Open();

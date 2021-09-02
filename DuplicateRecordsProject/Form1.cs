@@ -109,6 +109,7 @@ namespace DuplicateRecordsProject
             if (SelectedTableColumnCheckedListBox.Items.Count == 0) return;
 
             var columns = SelectedTableColumnCheckedListBox.Items.OfType<SqlColumn>();
+            // ReSharper disable once PossibleMultipleEnumeration
             var identityColumn = columns.FirstOrDefault(sqlColumn => sqlColumn.IsIdentity);
 
             var sqlColumns = SelectedTableColumnCheckedListBox.CheckedIColumnDetailsList();

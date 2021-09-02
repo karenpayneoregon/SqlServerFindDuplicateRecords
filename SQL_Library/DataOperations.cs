@@ -19,9 +19,13 @@ namespace SQL_Library
         {
             var dt = new DataTable();
 
-            dt.Columns.Add(new DataColumn() {ColumnName = "Process", DataType = typeof(bool), DefaultValue = false});
-            Console.WriteLine(ConnectionString);
-            Console.WriteLine(pStatement);
+            dt.Columns.Add(new DataColumn()
+            {
+                ColumnName = "Process", 
+                DataType = typeof(bool), 
+                DefaultValue = false
+            });
+
             using (var cn = new SqlConnection() {ConnectionString = ConnectionString})
             {
                 using (var cmd = new SqlCommand() {Connection = cn})

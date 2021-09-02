@@ -1,0 +1,1 @@
+﻿Class project for `SQL statements` used in C# 
