@@ -36,17 +36,18 @@ namespace DuplicateRecordsProject
 
             DatabaseNameListBox.DataSource = ops.DatabaseNames();
 
-            if (ops.IsKarenMachine)
+            var dOperations = new SqlTables("master");
+            if (!dOperations.NorthWindDemoExists()) return;
+            
+            DatabaseNameListBox.SelectedIndex = DatabaseNameListBox.FindString("NorthWindDemo");
+            DatabaseTableNamesListBox.SelectedIndex = DatabaseTableNamesListBox.FindString("Customer");
+            
+            var databaseTables = new SqlTables("NorthWindDemo");
+            _countryColumnList = databaseTables.CountrySelected;
+
+            foreach (var item in _countryColumnList)
             {
-                DatabaseNameListBox.SelectedIndex = DatabaseNameListBox.FindString("NorthWindDemo");
-                DatabaseTableNamesListBox.SelectedIndex = DatabaseTableNamesListBox.FindString("Customer");
-                var databaseTables = new SqlTables("NorthWindDemo");
-                _countryColumnList = databaseTables.CountrySelected;
-                
-                foreach (var item in _countryColumnList)
-                {
-                    SelectedTableColumnCheckedListBox.FindItemAndSetChecked(item);
-                }
+                SelectedTableColumnCheckedListBox.FindItemAndSetChecked(item);
             }
 
         }
@@ -138,7 +139,12 @@ namespace DuplicateRecordsProject
 
             if (!ops.IsSuccessFul)
             {
-                MessageBox.Show("Failure");
+                
+                if (ops.HasException && !string.IsNullOrWhiteSpace(ops.LastExceptionMessage))
+                {
+                    MessageBox.Show($"Failure\n{ops.LastExceptionMessage}");
+                }
+                
                 return;
             }
 

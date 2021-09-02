@@ -11,7 +11,7 @@ namespace SQL_Library
         /// <summary>
         /// This points to your database server
         /// </summary>
-        protected string DatabaseServer = "KARENS-PC";
+        protected string DatabaseServer = ".\\SQLEXPRESS";
         /// <summary>
         /// Name of database containing required tables
         /// </summary>
