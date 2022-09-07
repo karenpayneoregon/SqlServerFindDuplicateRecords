@@ -101,6 +101,13 @@ namespace SQL_Library
                 }
             }
 
+            for (int index = 0; index < columnList.Count; index++)
+            {
+                if (columnList[index].ColumnName.Contains(" "))
+                {
+                    columnList[index].HasSpaces = true;
+                }
+            }
             return columnList;
 
         }

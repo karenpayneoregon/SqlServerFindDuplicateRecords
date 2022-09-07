@@ -7,6 +7,7 @@
         public string ColumnName { get; set; }
         public string ColumnNameBracketed => $"[{ColumnName}]";
         public bool IsIdentity { get; set; }
+        public bool HasSpaces { get; set; }
         public override string ToString()
         {
             return ColumnName + (IsIdentity ? " (pk)" : "");

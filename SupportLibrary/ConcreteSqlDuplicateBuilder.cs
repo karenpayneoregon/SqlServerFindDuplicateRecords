@@ -24,11 +24,11 @@ namespace SupportLibrary
         }
         public override void CreateSelectStatement()
         {
-            _item.Add(string.Join(",", _sqlColumnList.Select(col => col.ColumnName).ToArray()) + $" FROM {_tableName} ");
+            _item.Add(string.Join(",", _sqlColumnList.Select(col => col.ColumnNameBracketed).ToArray()) + $" FROM {_tableName} ");
         }
         public override void CreateGroup()
         {
-            _item.Add("GROUP BY " + string.Join(",", _sqlColumnList.Select(col => col.ColumnName).ToArray()) + " ");
+            _item.Add("GROUP BY " + string.Join(",", _sqlColumnList.Select(col => col.ColumnNameBracketed).ToArray()) + " ");
         }
         public override void CreateHaving()
         {
@@ -36,7 +36,7 @@ namespace SupportLibrary
         }
         public override void CreateInnerSelect()
         {
-            var joined = _sqlColumnList.Select(item => $"A.{item.ColumnName} = B.{item.ColumnName}").ToArray().JoinCondition();
+            var joined = _sqlColumnList.Select(item => $"A.{item.ColumnNameBracketed} = B.{item.ColumnNameBracketed}").ToArray().JoinCondition();
             _item.Add(") B ON " + joined);
         }
         public override void OrderBy()
